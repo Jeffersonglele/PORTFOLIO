@@ -1,173 +1,646 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Jefferson - Portfolio</title>
+  <title>Jefferson GLELE - Portfolio</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+    
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     
     :root {
-      --bg: #111111;
-      --card: #1a1a1a;
-      --text: #e0e0e0;
-      --text-light: #aaaaaa;
-      --accent: #FF8A33; /* ton orange ACXS IT */
+      --bg-dark: #0a0a0a;
+      --bg-light: #e8e8e8;
+      --text-dark: #0a0a0a;
+      --text-light: #f5f5f5;
+      --accent: #FF6B35;
+      --accent-hover: #ff5520;
     }
     
-    * { margin:0; padding:0; box-sizing:border-box; }
     body {
-      background: var(--bg);
-      color: var(--text);
       font-family: 'Inter', sans-serif;
-      padding: 30px 20px;
-      line-height: 1.6;
+      overflow-x: hidden;
+      background: var(--bg-dark);
+      color: var(--text-light);
     }
-    .container { max-width: 900px; margin: 0 auto; display: grid; gap: 24px; }
-    .card { background: var(--card); border-radius: 24px; padding: 32px; box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
-    .header { display: flex; gap: 32px; align-items: center; }
-    .avatar { width: 140px; height: 140px; border-radius: 28px; object-fit: cover; border: 4px solid var(--accent); }
-    .intro h1 { font-size: 28px; font-weight: 700; margin-bottom: 12px; }
-    .intro p { font-size: 18px; color: var(--text-light); }
-    .interests { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 20px; }
-    .tag { background: #2a2a2a; padding: 8px 16px; border-radius: 50px; font-size: 14px; display: flex; align-items: center; gap: 8px; }
-    .section { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-    .exp, .edu { background: #222222; border-radius: 20px; padding: 24px; }
-    .year { background: var(--accent); color: white; padding: 4px 12px; border-radius: 50px; font-size: 13px; font-weight: 600; display: inline-block; margin-bottom: 12px; }
-    .title { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
-    .subtitle { color: var(--text-light); font-size: 15px; margin-bottom: 16px; }
-    ul { margin-left: 20px; font-size: 15px; }
-    li { margin-bottom: 8px; }
-    .tools { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 16px; }
-    .tools img { width: 48px; height: 48px; }
-    .flags { display: flex; gap: 12px; margin-top: 16px; }
-    .flags img { width: 32px; border-radius: 4px; }
-    .portfolio-links { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; margin: 32px 0; }
-    .portfolio-links a { display: flex; align-items: center; gap: 10px; background: #2a2a2a; padding: 12px 20px; border-radius: 50px; text-decoration: none; color: white; font-weight: 500; }
-    .details { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; font-size: 15px; }
-    .detail-item { display: flex; align-items: center; gap: 10px; background: #2a2a2a; padding: 10px 18px; border-radius: 50px; }
+    
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 20px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(10, 10, 10, 0.8);
+      backdrop-filter: blur(20px);
+      z-index: 1000;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    
+    .logo {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-light);
+      letter-spacing: 0.5px;
+    }
+    
+    .nav-links {
+      display: flex;
+      gap: 40px;
+      list-style: none;
+    }
+    
+    .nav-links a {
+      color: var(--text-light);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.3s ease;
+      position: relative;
+    }
+    
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--accent);
+      transition: width 0.3s ease;
+    }
+    
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+    
+    /* Hero Section */
+    .hero {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      background: var(--bg-light);
+    }
+    
+    .hero-content {
+      display: flex;
+      align-items: center;
+      gap: 80px;
+      max-width: 1400px;
+      padding: 0 60px;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .hero-image {
+      flex: 1;
+      max-width: 600px;
+      position: relative;
+    }
+    
+    .hero-image img {
+      width: 100%;
+      height: auto;
+      filter: grayscale(100%);
+      transition: filter 0.5s ease;
+    }
+    
+    .hero-image:hover img {
+      filter: grayscale(0%);
+    }
+    
+    .hero-text {
+      flex: 1;
+      position: relative;
+    }
+    
+    .hero-text h1 {
+      font-size: clamp(60px, 8vw, 120px);
+      font-weight: 800;
+      color: var(--text-dark);
+      line-height: 0.95;
+      margin-bottom: 30px;
+      letter-spacing: -3px;
+    }
+    
+    .hero-subtitle {
+      font-size: clamp(24px, 3vw, 42px);
+      font-weight: 300;
+      color: var(--text-dark);
+      margin-bottom: 10px;
+      line-height: 1.2;
+    }
+    
+    .hero-subtitle strong {
+      color: var(--accent);
+      font-weight: 700;
+    }
+    
+    .social-links {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 40px;
+    }
+    
+    .social-links a {
+      color: var(--text-dark);
+      text-decoration: none;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.3s ease;
+      opacity: 0.7;
+    }
+    
+    .social-links a:hover {
+      opacity: 1;
+      transform: translateX(10px);
+      color: var(--accent);
+    }
+    
+    /* Intro Section */
+    .intro-section {
+      background: var(--bg-dark);
+      padding: 150px 60px;
+      position: relative;
+    }
+    
+    .intro-label {
+      color: var(--accent);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 40px;
+    }
+    
+    .intro-text {
+      max-width: 1100px;
+      font-size: clamp(28px, 4vw, 56px);
+      font-weight: 300;
+      line-height: 1.4;
+      letter-spacing: -1px;
+    }
+    
+    .intro-text strong {
+      color: var(--accent);
+      font-weight: 700;
+    }
+    
+    .intro-description {
+      max-width: 600px;
+      margin-top: 50px;
+      font-size: 16px;
+      line-height: 1.8;
+      color: rgba(255, 255, 255, 0.6);
+    }
+    
+    .cta-button {
+      display: inline-block;
+      margin-top: 50px;
+      padding: 18px 40px;
+      background: var(--accent);
+      color: white;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 14px;
+      letter-spacing: 0.5px;
+      transition: all 0.3s ease;
+      border: 2px solid var(--accent);
+    }
+    
+    .cta-button:hover {
+      background: transparent;
+      color: var(--accent);
+      transform: translateY(-3px);
+    }
+    
+    /* Services Section */
+    .services-section {
+      background: var(--bg-dark);
+      padding: 150px 60px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    
+    .services-label {
+      color: var(--accent);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 80px;
+    }
+    
+    .service-item {
+      display: grid;
+      grid-template-columns: 200px 1fr 100px;
+      gap: 60px;
+      align-items: start;
+      padding: 60px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      transition: all 0.5s ease;
+      cursor: pointer;
+    }
+    
+    .service-item:hover {
+      padding-left: 30px;
+      background: rgba(255, 107, 53, 0.02);
+    }
+    
+    .service-number {
+      font-size: 120px;
+      font-weight: 200;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(255, 255, 255, 0.1);
+      line-height: 1;
+      transition: all 0.5s ease;
+    }
+    
+    .service-item:hover .service-number {
+      color: rgba(255, 107, 53, 0.1);
+      -webkit-text-stroke: 1px var(--accent);
+    }
+    
+    .service-content h3 {
+      font-size: 42px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      letter-spacing: -1px;
+    }
+    
+    .service-content p {
+      font-size: 16px;
+      color: rgba(255, 255, 255, 0.6);
+      line-height: 1.8;
+      margin-bottom: 30px;
+    }
+    
+    .service-list {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+    }
+    
+    .service-list li {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.5);
+      padding-left: 20px;
+      position: relative;
+    }
+    
+    .service-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 8px;
+      width: 6px;
+      height: 1px;
+      background: var(--accent);
+    }
+    
+    .service-code {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.3);
+      font-weight: 600;
+    }
+    
+    /* Skills Grid */
+    .skills-section {
+      background: var(--bg-dark);
+      padding: 100px 60px;
+    }
+    
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 40px;
+      margin-top: 60px;
+    }
+    
+    .skill-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 20px;
+      padding: 40px;
+      transition: all 0.4s ease;
+    }
+    
+    .skill-card:hover {
+      background: rgba(255, 107, 53, 0.05);
+      border-color: var(--accent);
+      transform: translateY(-10px);
+    }
+    
+    .skill-card h4 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 25px;
+      color: var(--accent);
+    }
+    
+    .skill-icons {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+    
+    .skill-icons img {
+      width: 48px;
+      height: 48px;
+      filter: grayscale(100%);
+      opacity: 0.4;
+      transition: all 0.3s ease;
+    }
+    
+    .skill-icons img:hover {
+      filter: grayscale(0%);
+      opacity: 1;
+      transform: scale(1.2);
+    }
+    
+    /* Contact Section */
+    .contact-section {
+      background: var(--bg-light);
+      padding: 150px 60px;
+      text-align: center;
+    }
+    
+    .contact-section h2 {
+      font-size: clamp(48px, 6vw, 96px);
+      font-weight: 800;
+      color: var(--text-dark);
+      margin-bottom: 30px;
+      letter-spacing: -2px;
+    }
+    
+    .contact-info {
+      display: flex;
+      justify-content: center;
+      gap: 60px;
+      margin-top: 60px;
+      flex-wrap: wrap;
+    }
+    
+    .contact-item {
+      text-align: center;
+    }
+    
+    .contact-item i {
+      font-size: 32px;
+      color: var(--accent);
+      margin-bottom: 15px;
+    }
+    
+    .contact-item a {
+      display: block;
+      color: var(--text-dark);
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+    
+    .contact-item a:hover {
+      color: var(--accent);
+    }
+    
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .hero-content {
+        flex-direction: column-reverse;
+        gap: 50px;
+        text-align: center;
+      }
+      
+      .social-links {
+        align-items: center;
+      }
+      
+      .service-item {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+      
+      .service-number {
+        font-size: 80px;
+      }
+    }
+    
     @media (max-width: 768px) {
-      .section { grid-template-columns: 1fr; }
-      .header { flex-direction: column; text-align: center; }
+      nav {
+        padding: 20px 30px;
+      }
+      
+      .nav-links {
+        gap: 20px;
+      }
+      
+      .hero-content,
+      .intro-section,
+      .services-section,
+      .skills-section,
+      .contact-section {
+        padding-left: 30px;
+        padding-right: 30px;
+      }
+      
+      .service-list {
+        grid-template-columns: 1fr;
+      }
     }
+    
+    /* Scroll animations */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 0.8s ease forwards;
+    }
+    
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .service-item:nth-child(1) { animation-delay: 0.1s; }
+    .service-item:nth-child(2) { animation-delay: 0.2s; }
+    .service-item:nth-child(3) { animation-delay: 0.3s; }
   </style>
 </head>
 <body>
-  <div class="container">
-
-    <!-- HEADER -->
-    <div class="card header">
-      <img src="baki.jpg" alt="Jefferson GLELE" class="avatar">
-      <div class="intro">
-        <h1>Jefferson GLELE</h1>
-        <p>Étudiant en 3ᵉ année Informatique (spécialité AIP)</p>
-        <br>
-        <p> • Futur développeur full-stack passionné</p>
-        <br>
-        <p>• Créatif, ambitieux & toujours prêt à apprendre</p>
-        <div class="interests">
-          <div class="tag"><i class="fas fa-code"></i> Coding</div>
-          <div class="tag"><i class="fas fa-lightbulb"></i> Création</div>
-          <div class="tag"><i class="fas fa-rocket"></i> Ambition</div>
+  
+  <!-- Navigation -->
+  <!-- <nav>
+    <div class="logo">© Jefferson GLELE</div>
+    <ul class="nav-links">
+      <li><a href="#projets">Projets</a></li>
+      <li><a href="#about">À propos</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav> -->
+  
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-image">
+        <img src="baki.jpg" alt="Jefferson GLELE">
+      </div>
+      <div class="hero-text">
+        <h1>Jefferson<br>GLELE</h1>
+        <div class="hero-subtitle">
+          <strong>// Développeur Full-Stack</strong><br>
+        </div>
+        <div class="social-links">
+          <a href="https://www.linkedin.com/in/jefferson-glele-0855a0372" target="_blank">
+            <i class="fab fa-linkedin"></i> LinkedIn
+          </a>
+          <a href="https://github.com/Jeffersonglele" target="_blank">
+            <i class="fab fa-github"></i> GitHub
+          </a>
+          <a href="mailto:micheeglele@gmail.com">
+            <i class="fas fa-envelope"></i> Email
+          </a>
         </div>
       </div>
     </div>
-
-    <!-- EXPERIENCE -->
-    <div class="card section">
-      <div class="exp">
-        <span class="year">Juin - Juil. 2025</span>
-        <div class="title">Stagiaire Développeur</div>
-        <div class="subtitle">ACXS IT • Bénin</div>
-        <ul>
-          <li>Développement de modules internes</li>
-          <li>Participation à la refonte du site web ACXS IT</li>
-          <li>Veille technologique & propositions d’améliorations</li>
+  </section>
+  
+  <!-- Intro Section -->
+  <section class="intro-section" id="about">
+    <div class="intro-label">// Intro</div>
+    <div class="intro-text">
+      Je conçois et développe des <strong>produits numériques,</strong> de l'idée à une version fonctionnelle, avec une attention particulière à la <strong>clarté et à l'efficacité.</strong>
+    </div>
+    <p class="intro-description">
+      Étudiant en 3ᵉ année d'Informatique (AIP) à l'ENEAM, je développe des solutions web et mobiles innovantes. Passionné par l'IA, le design et les nouvelles technologies, je m'efforce de créer des expériences numériques fluides et performantes.
+    </p>
+    <a href="projet.html" class="cta-button">Voir mes projets</a>
+  </section>
+  
+  <!-- Services Section -->
+  <section class="services-section" id="projets">
+    <div class="services-label">// Services</div>
+    
+    <div class="service-item fade-in">
+      <div class="service-number">01</div>
+      <div class="service-content">
+        <h3>Développement Web & Mobile</h3>
+        <p>Création d'applications web responsives et d'applications mobiles performantes avec une attention particulière à l'UX/UI.</p>
+        <ul class="service-list">
+          <li>Sites web responsifs</li>
+          <li>Applications Flutter</li>
+          <li>Progressive Web Apps</li>
+          <li>API REST & Backend</li>
+          <li>E-commerce</li>
+          <li>Intégration CMS</li>
         </ul>
       </div>
-
-      <div class="exp">
-        <span class="year">2023 - maintenant</span>
-        <div class="title">Freelance & Projets perso</div>
-        <div class="subtitle">Développeur autodidacte</div>
-        <ul>
-          <li>Création de sites web (HTML, CSS, JS, PHP)</li>
-          <li>Applications mobiles avec Flutter</li>
-          <li>Projets IA avec Python (TensorFlow, OpenCV)</li>
+      <div class="service-code">01</div>
+    </div>
+    
+    <div class="service-item fade-in">
+      <div class="service-number">02</div>
+      <div class="service-content">
+        <h3>Intelligence Artificielle</h3>
+        <p>Développement de solutions IA pour l'analyse de données, la vision par ordinateur et l'automatisation intelligente.</p>
+        <ul class="service-list">
+          <li>Machine Learning</li>
+          <li>Computer Vision</li>
+          <li>Traitement du langage</li>
+          <li>Modèles prédictifs</li>
+          <li>Automatisation</li>
+          <li>Data Analysis</li>
         </ul>
       </div>
+      <div class="service-code">02</div>
     </div>
-
-    <!-- SKILLS -->
-    <div class="card">
-      <div style="display:flex; gap:40px; flex-wrap:wrap;">
-        <div>
-          <strong>Langages & Frameworks</strong>
-          <div class="tools">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" alt="PHP">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg" alt="Flutter">
-          </div>
+    
+    <div class="service-item fade-in">
+      <div class="service-number">03</div>
+      <div class="service-content">
+        <h3>Design & Expérience Utilisateur</h3>
+        <p>Conception d'interfaces modernes et intuitives qui allient esthétique et fonctionnalité pour offrir la meilleure expérience utilisateur.</p>
+        <ul class="service-list">
+          <li>UI/UX Design</li>
+          <li>Prototypage Figma</li>
+          <li>Design Systems</li>
+          <li>Branding digital</li>
+          <li>Wireframing</li>
+          <li>User Research</li>
+        </ul>
+      </div>
+      <div class="service-code">03</div>
+    </div>
+  </section>
+  
+  <!-- Skills Section -->
+  <section class="skills-section">
+    <div class="intro-label">// Compétences Techniques</div>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <h4>Langages</h4>
+        <div class="skill-icons">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" title="Python">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java" title="Java">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript" title="JavaScript">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" alt="PHP" title="PHP">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dart/dart-original.svg" alt="Dart" title="Dart">
         </div>
-        <div>
-          <strong>Outils & DB</strong>
-          <div class="tools">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="MySQL">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" alt="VSCode">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" alt="Figma">
-          </div>
+      </div>
+      
+      <div class="skill-card">
+        <h4>Frameworks & Librairies</h4>
+        <div class="skill-icons">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg" alt="Flutter" title="Flutter">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg" alt="TensorFlow" title="TensorFlow">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5" title="HTML5">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3" title="CSS3">
         </div>
       </div>
-
-      <div style="margin-top:32px;">
-        <strong>Langues</strong>
-        <div class="flags">
-          <img src="https://flagcdn.com/fr.svg" alt="Français">
-          <img src="https://flagcdn.com/gb.svg" alt="English">
+      
+      <div class="skill-card">
+        <h4>Outils & Technologies</h4>
+        <div class="skill-icons">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git" title="Git">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="MySQL" title="MySQL">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" alt="VSCode" title="VSCode">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" alt="Figma" title="Figma">
         </div>
       </div>
     </div>
-
-    <!-- EDUCATION -->
-    <div class="card section">
-      <div class="edu">
-        <span class="year">2023 - 2026</span>
-        <div class="title">Licence Informatique</div>
-        <div class="subtitle">Spécialité AIP (Analyse Informatique et Programmation)<br>ENEAM - UAC • Bénin</div>
+  </section>
+  
+  <!-- Contact Section -->
+  <section class="contact-section" id="contact">
+    <h2>Travaillons<br>ensemble</h2>
+    <div class="contact-info">
+      <div class="contact-item">
+        <i class="fas fa-envelope"></i>
+        <a href="mailto:micheeglele@gmail.com">micheeglele@gmail.com</a>
       </div>
-      <div class="edu">
-        <span class="year">2023</span>
-        <div class="title">Baccalauréat Série D</div>
-        <div class="subtitle">Collège Catholique St Augustin de Cotonou • Bénin</div>
+      <div class="contact-item">
+        <i class="fas fa-phone"></i>
+        <a href="tel:+22990077139">+229 90 07 71 39</a>
       </div>
-    </div>
-
-    <!-- PORTFOLIO LINKS -->
-    <div class="card">
-      <strong style="display:block; margin-bottom:16px; text-align:center;">Mes projets</strong>
-      <div class="portfolio-links">
-        <a href="https://github.com/Jeffersonglele" target="_blank"><i class="fab fa-github"></i> GitHub</a>
-        <a href="https://www.linkedin.com/in/jefferson-glele-0855a0372?utm_source=share_via&utm_content=profile&utm_medium=member_ios" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
-        <a href="mailto:micheeglele@gmail.com"><i class="fas fa-envelope"></i> Email</a>
+      <div class="contact-item">
+        <i class="fas fa-map-marker-alt"></i>
+        <a>Cotonou, Bénin</a>
       </div>
     </div>
+  </section>
 
-    <!-- DETAILS -->
-    <div class="card">
-      <strong style="display:block; margin-bottom:16px; text-align:center;">Contact</strong>
-      <div class="details">
-        <div class="detail-item"><i class="fas fa-birthday-cake"></i> 19 ans</div>
-        <div class="detail-item"><i class="fas fa-envelope"></i> micheeglele@gmail.com</div>
-        <div class="detail-item"><i class="fas fa-phone"></i> +229 90 07 71 39</div>
-        <div class="detail-item"><img src="https://flagcdn.com/bj.svg" width="20"> Bénin</div>
-      </div>
-    </div>
-
-  </div>
 </body>
 </html>
