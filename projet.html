@@ -29,6 +29,46 @@
             background: var(--bg-dark);
             color: var(--text-light);
             overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Dot Grid Background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                radial-gradient(circle, rgba(255, 107, 53, 0.15) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.3;
+        }
+
+        /* Gradient Overlay */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(255, 107, 53, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(255, 107, 53, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Ensure all content is above background */
+        nav,
+        .projects-hero,
+        .projects-container {
+            position: relative;
+            z-index: 1;
         }
 
         /* Navigation */
@@ -307,85 +347,8 @@
             }
 
             .project-preview {
-                min-height: 400px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            nav {
-                padding: 20px 30px;
-            }
-
-            .projects-hero,
-            .projects-container {
-                padding-left: 30px;
-                padding-right: 30px;
-            }
-
-            .nav-links {
-                gap: 20px;
-            }
-
-            .project-item {
-                padding: 40px 0;
-            }
-        }
-
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .fade-in {
-            animation: fadeInUp 0.8s ease forwards;
-            opacity: 0;
-        }
-
-        .project-item:nth-child(1) {
-            animation-delay: 0.1s;
-        }
-
-        .project-item:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-
-        .project-item:nth-child(3) {
-            animation-delay: 0.3s;
-        }
-
-        .project-item:nth-child(4) {
-            animation-delay: 0.4s;
-        }
-
-        .project-item:nth-child(5) {
-            animation-delay: 0.5s;
-        }
-
-        /* Ajoutez ces règles dans la section Responsive ou à la fin du style */
-
-        @media (max-width: 1024px) {
-            .project-item {
-                grid-template-columns: 1fr;
-                gap: 40px;
-            }
-
-            .project-divider {
-                display: none;
-            }
-
-            .project-preview {
                 min-height: 300px;
-                /* Hauteur minimale sur tablette */
                 order: -1;
-                /* Mettre l'image avant le texte sur mobile/tablette */
                 margin-bottom: 20px;
             }
         }
@@ -438,10 +401,8 @@
 
             .project-preview {
                 min-height: 250px;
-                /* Hauteur fixe pour mobile */
                 width: 100%;
                 height: 250px;
-                /* Hauteur fixe pour assurer l'affichage */
                 border-radius: 12px;
             }
 
@@ -449,7 +410,6 @@
                 width: 100%;
                 height: 100%;
                 object-fit: cover;
-                /* Conserver cover mais avec hauteur définie */
             }
 
             .project-preview.placeholder {
@@ -476,6 +436,12 @@
             .tag {
                 font-size: 12px;
                 padding: 6px 12px;
+            }
+
+            /* Ajuster le background pour mobile */
+            body::before {
+                background-size: 30px 30px;
+                opacity: 0.2;
             }
         }
 
@@ -546,22 +512,15 @@
                 font-size: 13px;
             }
 
-            /* Cacher les liens de navigation sur mobile si nécessaire */
             .nav-links {
                 gap: 15px;
                 font-size: 11px;
             }
 
-            /* Alternative: menu hamburger pour mobile */
-            /* 
-    .nav-links {
-        display: none;
-    }
-    
-    .menu-toggle {
-        display: block;
-    }
-    */
+            body::before {
+                background-size: 25px 25px;
+                opacity: 0.15;
+            }
         }
 
         /* Correction pour l'effet hover sur mobile */
@@ -584,7 +543,6 @@
             }
         }
 
-        /* Pour mobile, désactiver certains effets hover */
         @media (hover: none) and (pointer: coarse) {
             .project-item:active .project-preview {
                 border-color: var(--accent);
@@ -596,7 +554,6 @@
             }
         }
 
-        /* Amélioration générale des images */
         .project-preview {
             position: relative;
             overflow: hidden;
@@ -609,19 +566,15 @@
             object-fit: cover;
             transition: transform 0.5s ease;
             will-change: transform;
-            /* Optimisation pour animations */
         }
 
-        /* S'assurer que les images sont chargées correctement */
         .project-preview img[src*=".png"],
         .project-preview img[src*=".jpg"],
         .project-preview img[src*=".jpeg"],
         .project-preview img[src*=".webp"] {
             background-color: #1a1a1a;
-            /* Fond de secours */
         }
 
-        /* Fallback pour images manquantes */
         .project-preview:not(:has(img)) {
             display: flex;
             align-items: center;
@@ -636,10 +589,58 @@
             text-align: center;
             padding: 20px;
         }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeInUp 0.8s ease forwards;
+            opacity: 0;
+        }
+
+        .project-item:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .project-item:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .project-item:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .project-item:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        .project-item:nth-child(5) {
+            animation-delay: 0.5s;
+        }
     </style>
 </head>
 
 <body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">Jefferson GLELE</div>
+        <ul class="nav-links">
+            <li><a href="#accueil">Accueil</a></li>
+            <li><a href="#projets">Projets</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
 
     <!-- Hero -->
     <section class="projects-hero">
