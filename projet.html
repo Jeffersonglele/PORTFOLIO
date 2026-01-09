@@ -1,11 +1,673 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Liste des Projets</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jefferson GLELE - Projets</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@300;400;500;600;700;800;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-dark: #0a0a0a;
+            --text-light: #f5f5f5;
+            --text-muted: #888888;
+            --accent: #FF6B35;
+            --border: #222222;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-light);
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 25px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-light);
+            letter-spacing: 0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        /* Hero */
+        .projects-hero {
+            padding: 150px 60px 60px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .hero-label {
+            color: var(--accent);
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .projects-hero h1 {
+            font-size: clamp(48px, 6vw, 72px);
+            font-weight: 800;
+            letter-spacing: -2px;
+            margin-bottom: 20px;
+        }
+
+        .projects-hero p {
+            font-size: 18px;
+            color: var(--text-muted);
+            max-width: 700px;
+            line-height: 1.7;
+        }
+
+        /* Projects Container */
+        .projects-container {
+            max-width: 1600px;
+            margin: 80px auto;
+            padding: 0 60px;
+        }
+
+        .project-section {
+            margin-bottom: 120px;
+        }
+
+        .section-title {
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 60px;
+        }
+
+        /* Project Item */
+        .project-item {
+            display: grid;
+            grid-template-columns: 400px 1px 1fr;
+            gap: 60px;
+            margin-bottom: 80px;
+            padding: 60px 0;
+            border-bottom: 1px solid var(--border);
+            transition: all 0.5s ease;
+        }
+
+        .project-item:hover {
+            padding-left: 20px;
+        }
+
+        .project-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Left Side - Description */
+        .project-info {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .project-number {
+            font-family: Orbitron, sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-muted);
+            letter-spacing: 2px;
+        }
+
+        .project-title {
+            font-family: Orbitron, sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            letter-spacing: -1px;
+        }
+
+        .project-description {
+            font-size: 16px;
+            line-height: 1.8;
+            color: var(--text-muted);
+            margin-bottom: 25px;
+        }
+
+        .project-tags {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+
+        .tag {
+            background: rgba(255, 107, 53, 0.1);
+            border: 1px solid rgba(255, 107, 53, 0.3);
+            color: var(--accent);
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .project-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .meta-item i {
+            color: var(--accent);
+            width: 16px;
+        }
+
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .project-link:hover {
+            gap: 15px;
+        }
+
+        /* Middle - Divider */
+        .project-divider {
+            width: 1px;
+            background: var(--border);
+            align-self: stretch;
+        }
+
+        /* Right Side - Image */
+        .project-preview {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+            border: 1px solid var(--border);
+            transition: all 0.5s ease;
+        }
+
+        .project-item:hover .project-preview {
+            border-color: var(--accent);
+            box-shadow: 0 20px 60px rgba(255, 107, 53, 0.2);
+        }
+
+        .project-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.5s ease;
+        }
+
+        .project-item:hover .project-preview img {
+            transform: scale(1.05);
+        }
+
+        .project-preview.placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 400px;
+        }
+
+        .project-preview.placeholder i {
+            font-size: 80px;
+            color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Gradient Overlays for different categories */
+        .project-preview.web {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .project-preview.mobile {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .project-preview.ai {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+
+        .project-preview.design {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .project-item {
+                grid-template-columns: 350px 1px 1fr;
+                gap: 40px;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .project-item {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .project-divider {
+                display: none;
+            }
+
+            .project-preview {
+                min-height: 400px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 20px 30px;
+            }
+
+            .projects-hero,
+            .projects-container {
+                padding-left: 30px;
+                padding-right: 30px;
+            }
+
+            .nav-links {
+                gap: 20px;
+            }
+
+            .project-item {
+                padding: 40px 0;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeInUp 0.8s ease forwards;
+            opacity: 0;
+        }
+
+        .project-item:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .project-item:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .project-item:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .project-item:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        .project-item:nth-child(5) {
+            animation-delay: 0.5s;
+        }
+    </style>
 </head>
+
 <body>
-    
+
+    <!-- Hero -->
+    <section class="projects-hero">
+        <div class="hero-label">// Portfolio</div>
+        <h1 style="font-family: Orbitron;">Projets Sélectionnés</h1>
+        <p>Une collection de mes travaux récents en développement web, applications mobiles et intelligence
+            artificielle. Chaque projet reflète mon engagement envers l'innovation et la qualité.</p>
+    </section>
+
+    <!-- Projects -->
+    <div class="projects-container">
+
+        <!-- Web Development -->
+        <div class="project-section">
+            <div class="section-title">// Développement Web</div>
+
+            <div class="project-item fade-in">
+                <div class="project-info">
+                    <div class="project-number">01</div>
+                    <h2 class="project-title">Site Paiement & Suivi Scolaire</h2>
+                    <p class="project-description">
+                        Plateforme web complète pour la gestion des paiements scolaires et le suivi académique des
+                        élèves. Permet aux parents de payer les frais de scolarité en ligne et de suivre la progression
+                        de leurs enfants en temps réel avec un système de notifications automatisé.
+                    </p>
+                    <div class="project-tags">
+                        <span class="tag">PHP</span>
+                        <span class="tag">MySQL</span>
+                        <span class="tag">JavaScript</span>
+                        <span class="tag">Fedapay</span>
+                    </div>
+                    <div class="project-meta">
+                        <div class="meta-item">
+                            <i class="fas fa-calendar"></i>
+                            <span>2025</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-graduation-cap"></i>
+                            <span>Éducation</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-users"></i>
+                            <span>Multi-établissements</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-divider"></div>
+
+                <div class="project-preview web">
+                    <img src="scolarite.png" alt="projet1">
+                </div>
+            </div>
+
+            <div class="project-item fade-in">
+                <div class="project-info">
+                    <div class="project-number">02</div>
+                    <h2 class="project-title">Site Culturel Bénin</h2>
+                    <p class="project-description">
+                        Site web de promotion culturelle du Bénin mettant en valeur le patrimoine, les traditions,
+                        l'artisanat et le tourisme local. Interface immersive avec galeries photos, vidéos et cartes
+                        interactives pour découvrir les richesses culturelles béninoises.
+                    </p>
+                    <div class="project-tags">
+                        <span class="tag">HTML5</span>
+                        <span class="tag">CSS3</span>
+                        <span class="tag">JavaScript</span>
+                        <span class="tag">Laravel</span>
+                    </div>
+                    <div class="project-meta">
+                        <div class="meta-item">
+                            <i class="fas fa-calendar"></i>
+                            <span>2025</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-flag"></i>
+                            <span>Promotion culturelle</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-images"></i>
+                            <span>Galerie multimédia</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-divider"></div>
+
+                <div class="project-preview web">
+                    <img src="culture.png" alt="projet2">
+                </div>
+            </div>
+
+            <div class="project-item fade-in">
+                <div class="project-info">
+                    <div class="project-number">03</div>
+                    <h2 class="project-title">App Web Suivi Médical</h2>
+                    <p class="project-description">
+                        Application web de gestion et suivi médical permettant aux professionnels de santé de gérer les
+                        dossiers patients, planifier les rendez-vous et suivre les traitements. Interface intuitive avec
+                        système d'alertes et historiques médicaux complets.
+                    </p>
+                    <div class="project-tags">
+                        <span class="tag">PHP</span>
+                        <span class="tag">MySQL</span>
+                        <span class="tag">JavaScript</span>
+                    </div>
+                    <div class="project-meta">
+                        <div class="meta-item">
+                            <i class="fas fa-calendar"></i>
+                            <span>2025</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-heartbeat"></i>
+                            <span>Santé</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-user-md"></i>
+                            <span>Professionnels de santé</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-divider"></div>
+
+                <div class="project-preview web">
+                    <img src="sante.png" alt="projet3">
+                </div>
+            </div>
+
+            <div class="project-item fade-in">
+                <div class="project-info">
+                    <div class="project-number">04</div>
+                    <h2 class="project-title">Refonte Site ACXS IT</h2>
+                    <p class="project-description">
+                        Participation à la refonte complète du site web d'ACXS IT. Développement de modules internes,
+                        optimisation des performances et amélioration de l'expérience utilisateur avec une approche
+                        moderne et responsive. Intégration de nouvelles fonctionnalités et design épuré.
+                    </p>
+                    <div class="project-tags">
+                        <span class="tag">PHP</span>
+                        <span class="tag">JavaScript</span>
+                        <span class="tag">MySQL</span>
+                        <span class="tag">UI/UX</span>
+                    </div>
+                    <div class="project-meta">
+                        <div class="meta-item">
+                            <i class="fas fa-calendar"></i>
+                            <span>2025</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-building"></i>
+                            <span>ACXS IT, Bénin</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-code"></i>
+                            <span>Stage académique</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-divider"></div>
+
+                <div class="project-preview web">
+                    <img src="acxs.png" alt="projet4">
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Apps -->
+        <div class="project-section">
+            <div class="section-title">// Applications Mobiles</div>
+
+            <div class="project-item fade-in">
+                <div class="project-info">
+                    <div class="project-number">05</div>
+                    <h2 class="project-title">App Livraison Multi-Services</h2>
+                    <p class="project-description">
+                        Application Flutter de livraison complète avec architecture microservices. Divisée en trois
+                        services indépendants : gestion des utilisateurs, des prestataires de services et du système de
+                        livraison. Permet de commander, suivre et gérer des livraisons en temps réel.
+                    </p>
+                    <div class="project-tags">
+                        <span class="tag">Flutter</span>
+                        <span class="tag">Dart</span>
+                        <span class="tag">Microservices</span>
+                        <span class="tag">REST API</span>
+                        <span class="tag">Real-time</span>
+                    </div>
+                    <div class="project-meta">
+                        <div class="meta-item">
+                            <i class="fas fa-calendar"></i>
+                            <span>2025-2026</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-truck"></i>
+                            <span>3 microservices (User-Provider-Delivery)</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-map-marked-alt"></i>
+                            <span>Tracking GPS</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-divider"></div>
+
+                <div class="project-preview web">
+                    <img src="flutter.png" alt="projet5">
+                </div>
+            </div>
+
+            <div class="project-item fade-in">
+                <div class="project-info">
+                    <div class="project-number">06</div>
+                    <h2 class="project-title">MyWallet - Gestion Financière</h2>
+                    <p class="project-description">
+                        Application mobile de gestion financière personnelle pour aider à épargner et simuler toutes les
+                        transactions. Permet de suivre les dépenses, créer des budgets, simuler des scénarios financiers
+                        et atteindre ses objectifs d'épargne avec des graphiques et analyses détaillées.
+                    </p>
+                    <div class="project-tags">
+                        <span class="tag">React.js</span>
+                        <span class="tag">Vite</span>
+                        <span class="tag">Mysql</span>
+                        <span class="tag">Charts</span>
+                        <span class="tag">Firebase</span>
+                    </div>
+                    <div class="project-meta">
+                        <div class="meta-item">
+                            <i class="fas fa-calendar"></i>
+                            <span>2025 - Présent</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-wallet"></i>
+                            <span>Gestion financière</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-chart-pie"></i>
+                            <span>Analyse & Simulation</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-divider"></div>
+
+                <div class="project-preview web">
+                    <img src="wallet.png" alt="projet6">
+                </div>
+            </div>
+        </div>
+
+        <!-- Desktop Applications -->
+        <div class="project-section">
+            <div class="section-title">// Applications Desktop</div>
+
+            <div class="project-item fade-in">
+                <div class="project-info">
+                    <div class="project-number">07</div>
+                    <h2 class="project-title">Interface Tableur avec Tkinter</h2>
+                    <p class="project-description">
+                        Application desktop développée en Python avec Tkinter, offrant une interface similaire à Excel.
+                        Permet la gestion de données en tableau avec des fonctionnalités de calcul, tri, filtrage et
+                        export. Interface intuitive avec grille personnalisable.
+                    </p>
+                    <div class="project-tags">
+                        <span class="tag">Python</span>
+                        <span class="tag">Tkinter</span>
+                        <span class="tag">Pandas</span>
+                        <span class="tag">GUI</span>
+                    </div>
+                    <div class="project-meta">
+                        <div class="meta-item">
+                            <i class="fas fa-calendar"></i>
+                            <span>2025</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-desktop"></i>
+                            <span>Application Desktop</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-table"></i>
+                            <span>Tableur & Calculs</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-divider"></div>
+
+                <div class="project-preview web">
+                    <img src="python.png" alt="projet7">
+                </div>
+            </div>
+        </div>
+
+    </div>
+
 </body>
+
 </html>
