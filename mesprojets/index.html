@@ -286,6 +286,8 @@
             background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
             border: 1px solid var(--border);
             transition: all 0.5s ease;
+            aspect-ratio: 16/9;
+            width: 100%;
         }
 
         .project-item:hover .project-preview {
@@ -405,9 +407,10 @@
             }
 
             .project-preview {
-                min-height: 250px;
+                min-height: 180px;
                 width: 100%;
-                height: 250px;
+                height: auto;
+                aspect-ratio: 16/9;
                 border-radius: 12px;
             }
 
@@ -484,8 +487,9 @@
             }
 
             .project-preview {
-                min-height: 200px;
-                height: 200px;
+                min-height: 150px;
+                height: auto;
+                aspect-ratio: 16/9;
             }
 
             .project-preview.placeholder {
@@ -882,7 +886,7 @@
                 <div class="project-divider"></div>
 
                 <div class="project-preview web">
-                    <img src="../assets/wallet.png" alt="projet6">
+                    <img src="../assets/mywallet.png" alt="projet6">
                 </div>
             </div>
         </div>
